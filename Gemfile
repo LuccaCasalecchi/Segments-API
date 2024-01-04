@@ -10,7 +10,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw mswin x64_mingw ]
-  gem 'dotenv-rails' # Adicionado aqui
+  gem 'dotenv-rails'
 end
 
 group :development do
