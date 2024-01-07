@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_03_182838) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_07_024857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_03_182838) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "user_segments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "segment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["segment_id"], name: "index_user_segments_on_segment_id"
+    t.index ["user_id"], name: "index_user_segments_on_user_id"
+  end
+
   create_table "user_tags", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "tag_id"
@@ -74,6 +83,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_03_182838) do
   add_foreign_key "segment_rules", "segments"
   add_foreign_key "segment_tag_rules", "segments"
   add_foreign_key "segment_tag_rules", "tags"
+  add_foreign_key "user_segments", "segments"
+  add_foreign_key "user_segments", "users"
   add_foreign_key "user_tags", "tags"
   add_foreign_key "user_tags", "users"
 end

@@ -7,8 +7,16 @@ Rails.application.routes.draw do
       delete 'tags/:tag_id', to: 'user_tags#remove', as: :remove_tag
       get 'tags', to: 'user_tags#index'
     end
+
+    resources :segments, controller: 'user_segments', only: [:index, :create, :destroy]
   end
 
   resources :tags
-  resources :segments
+
+  resources :segments do
+    member do
+      get 'users', to: 'segment_user#index'
+    end
+    resources :rules, controller: 'segment_rules'
+  end
 end
