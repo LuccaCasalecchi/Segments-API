@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :segments do
     member do
-      get 'users', to: 'segment_user#index'
+      get 'users', to: 'segments_user#index'
     end
     resources :rules, controller: 'segment_rules'
   end

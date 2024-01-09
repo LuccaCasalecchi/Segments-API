@@ -1,4 +1,4 @@
-class SegmentUserController < ApplicationController
+class SegmentsUserController < ApplicationController
   # GET /segments/:id/users
   def index
     segment = Segment.find(params[:id])

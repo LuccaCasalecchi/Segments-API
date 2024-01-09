@@ -13,8 +13,14 @@ class SegmentRulesController < ApplicationController
 
   def index
     rules = @segment.segment_rules
-    render json: rules
+
+    if rules.empty?
+      render json: { message: "No Rule found" }
+    else
+      render json: rules
+    end
   end
+
 
   def destroy
     if @rule.destroy

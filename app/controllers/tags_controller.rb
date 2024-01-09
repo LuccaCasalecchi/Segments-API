@@ -8,8 +8,12 @@ class TagsController < ApplicationController
 
   # GET /tags/:id
   def show
-    set_tag
-    render json: @tag
+    begin
+      @tag = Tag.find(params[:id])
+      render json: @tag
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "User not found" }, status: :not_found
+    end
   end
 
   # POST /tags

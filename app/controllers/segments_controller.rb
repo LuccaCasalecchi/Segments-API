@@ -9,7 +9,12 @@ class SegmentsController < ApplicationController
 
   # GET /segments/:id
   def show
-    render json: @segment
+    begin
+      @segment = Tag.find(params[:id])
+      render json: @segment
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "User not found" }, status: :not_found
+    end
   end
 
   # POST /segments
