@@ -5,4 +5,7 @@ class Segment < ApplicationRecord
 
   has_many :user_segments
   has_many :users, through: :user_segments
+
+  validates :name, presence: true
+  validates :description, presence: true
 end

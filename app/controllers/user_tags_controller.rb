@@ -1,4 +1,5 @@
 class UserTagsController < ApplicationController
+
   # POST /users/:user_id/tags/:tag_id
   def assign
     user = User.find(params[:id])
@@ -19,6 +20,15 @@ class UserTagsController < ApplicationController
     render json: { error: e.message }, status: :not_found
   end
 
+  # GET /users/:user_id/tags/:tag_id
+  def show
+    user = User.find(params[:id])
+    tag = user.tags.find(params[:tag_id])
+    render json: tag
+  rescue ActiveRecord::RecordNotFound => e
+    render json: { error: e.message }, status: :not_found
+  end
+
   # GET /users/:user_id/tags
   def index
     user = User.find(params[:id])
@@ -26,4 +36,5 @@ class UserTagsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => e
     render json: { error: e.message }, status: :not_found
   end
+
 end

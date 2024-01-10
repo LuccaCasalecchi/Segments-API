@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   db:
     image: postgres
@@ -12,6 +12,8 @@ services:
       - "5432:5432"
   web:
     build: .
+    environment:
+      SECRET_KEY_BASE: d788349df7bf879f1d1b6be919283e6a1f74ea61711c07cea5493d407d3d6239ed7e6e10904a029677d932f7ac1b75d01beecf7f7bae35f94caaaf2ed44b3ea2
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/myapp

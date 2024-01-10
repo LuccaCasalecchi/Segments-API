@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'tags/:tag_id', to: 'user_tags#assign', as: :assign_tag
       delete 'tags/:tag_id', to: 'user_tags#remove', as: :remove_tag
       get 'tags', to: 'user_tags#index'
+      get 'tags/:tag_id', to: 'user_tags#show', as: :user_tag
     end
 
     resources :segments, controller: 'user_segments', only: [:index, :create, :destroy]

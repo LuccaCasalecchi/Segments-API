@@ -7,10 +7,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    begin
-      @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    if @user
       render json: @user
-    rescue ActiveRecord::RecordNotFound
+    else
       render json: { error: "User not found" }, status: :not_found
     end
   end
@@ -21,25 +21,34 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /users/:id
   def update
-    @user = User.find(params[:id])
-    if @user.update(update_user_params)
+    @user = User.find_by_id(params[:id])
+    if @user.nil?
+      render json: { error: "User not found" }, status: :not_found
+    elsif @user.update(update_user_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
+
+
   # DELETE /users/:id
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    head :no_content
+    @user = User.find_by_id(params[:id])
+    if @user
+      @user.destroy
+      head :no_content
+    else
+      render json: { error: "User not found" }, status: :not_found
+    end
   end
 
   private
